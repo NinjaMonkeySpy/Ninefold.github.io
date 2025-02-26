@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ninefold Distillery Experience</title>
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      background-color: #fafafa;
+      color: #333;
+    }
+
+    /* Navbar */
+    nav {
+      width: 100%;
+      background: linear-gradient(to right, #FF8000, #FF4800);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 999;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    }
+    .nav-left {
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: #fff;
+    }
+    .nav-right ul {
+      list-style-type: none;
+      display: flex;
+      gap: 1rem;
+    }
+    .nav-right a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 600;
+      transition: opacity 0.3s;
+    }
+    .nav-right a:hover {
+      opacity: 0.8;
+    }
+
+    /* Hero Section */
+    .hero {
+      margin-top: 70px; /* account for fixed nav */
+      min-height: 60vh;
+      background: linear-gradient(to right, #FFD08D, #FFA441);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    .hero-content {
+      max-width: 700px;
+    }
+    .hero-content h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #333;
+      line-height: 1.2;
+    }
+    .hero-content p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      color: #555;
+    }
+    .cta-button {
+      display: inline-block;
+      background: #FF6800;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .cta-button:hover {
+      background: #e05c00;
+    }
+
+    /* Experience Details Section */
+    .experience-section {
+      padding: 3rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .experience-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #FF6800;
+    }
+    .experience-section p {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      color: #444;
+    }
+    .experience-section .highlight {
+      font-weight: bold;
+      color: #ff4800;
+    }
+    .experience-section ul {
+      text-align: left;
+      margin: 1rem auto;
+      max-width: 600px;
+      list-style: disc;
+      padding-left: 1.5rem;
+      color: #555;
+    }
+    .experience-section ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Modal (Booking Form) */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0,0,0,0.5);
+      display: none; /* hidden by default */
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 450px;
+      position: relative;
+    }
+    .modal-content h2 {
+      margin-bottom: 1rem;
+      color: #FF6800;
+      font-size: 1.5rem;
+    }
+    .modal-content label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #333;
+    }
+    .modal-content input,
+    .modal-content textarea {
+      width: 100%;
+      padding: 0.7rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .modal-content button {
+      background: #FF6800;
+      color: #fff;
+      border: none;
+      padding: 0.8rem 1.2rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-weight: bold;
+    }
+    .modal-content button:hover {
+      background: #e05c00;
+    }
+    .close-modal {
+      position: absolute;
+      top: 10px; 
+      right: 10px;
+      background: transparent;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #666;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: linear-gradient(to right, #FF8000, #FF4800);
+      color: #fff;
+    }
+    footer p {
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-left">Ninefold Distillery</div>
+  <div class="nav-right">
+    <ul>
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#" id="openModalBtn">Book Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <h1>Experience Our Distillery &amp; Plant a Better Future</h1>
+    <p>
+      Join our guided tour where every bottle comes with a 
+      <span class="highlight">plantable label</span> – 
+      a reminder that sustainability starts in your hands.
+    </p>
+    <a href="#" class="cta-button" id="openModalBtnHero">Book Experience</a>
+  </div>
+</section>
+
+<!-- Experience Details Section -->
+<section class="experience-section" id="experience">
+  <h2>Your Distillery Journey</h2>
+  <p>
+    Discover the heart and soul of Ninefold Distillery, 
+    a place where local tradition meets global innovation. 
+    This experience is designed to inspire, educate, and 
+    immerse you in the world of <strong>premium Scottish rum</strong>.
+  </p>
+  <p>
+    During your visit, you’ll learn about our copper-pot stills, 
+    sustainable practices, and the craft that goes into 
+    every drop we produce. But the experience doesn't stop 
+    when you leave:
+  </p>
+  <ul>
+    <li>
+      Each bottle purchased includes a <strong>plantable label</strong> 
+      infused with wildflower seeds.
+    </li>
+    <li>
+      Take it home, plant it in soil, and watch your own 
+      little patch of nature grow as a symbol of 
+      <strong>Scotland’s commitment to sustainability</strong>.
+    </li>
+  </ul>
+  <p>
+    Ready to raise a glass to the future? 
+    Book your spot below and 
+    <em>grow</em> the impact of every bottle you enjoy.
+  </p>
+</section>
+
+<!-- Modal (Booking Form) -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-content">
+    <button class="close-modal" id="closeModalBtn">×</button>
+    <h2>Book Your Experience</h2>
+    <form id="bookingForm">
+      <label for="fullName">Full Name:</label>
+      <input 
+        type="text" 
+        id="fullName" 
+        name="fullName" 
+        placeholder="John Doe" 
+        required
+      />
+
+      <label for="email">Email:</label>
+      <input 
+        type="email" 
+        id="email" 
+        name="email" 
+        placeholder="john@example.com" 
+        required
+      />
+
+      <label for="visitDate">Preferred Date:</label>
+      <input 
+        type="date" 
+        id="visitDate" 
+        name="visitDate" 
+        required
+      />
+
+      <label for="message">Message (optional):</label>
+      <textarea 
+        id="message" 
+        name="message" 
+        rows="3" 
+        placeholder="Any special requests?"
+      ></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <p>© 2025 Ninefold Distillery. Grow with every sip.</p>
+</footer>
+
+<script>
+  // Elements
+  const openModalBtn = document.getElementById('openModalBtn');
+  const openModalBtnHero = document.getElementById('openModalBtnHero');
+  const modalOverlay = document.getElementById('modalOverlay');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const bookingForm = document.getElementById('bookingForm');
+
+  // Open modal from nav
+  openModalBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    modalOverlay.style.display = 'flex';
+  });
+
+  // Open modal from hero CTA
+  openModalBtnHero?.addEventListener('click', (e) => {
+    e.preventDefault();
+    modalOverlay.style.display = 'flex';
+  });
+
+  // Close modal
+  closeModalBtn.addEventListener('click', () => {
+    modalOverlay.style.display = 'none';
+  });
+
+  // Close modal if clicked outside the form
+  window.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) {
+      modalOverlay.style.display = 'none';
+    }
+  });
+
+  // Handle form submission
+  bookingForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Thank you for booking your distillery experience! We will get in touch soon.');
+    bookingForm.reset();
+    modalOverlay.style.display = 'none';
+  });
+</script>
+
+</body>
+</html>
